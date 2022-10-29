@@ -1,101 +1,80 @@
 <template>
   <div class="wrapper">
-<div class="side-bar">
-        <button class="save-button">Save Design</button>
-      <p class="customize">Customize</p>
-      <hr>
-      <div class="editor-items">
-
-      <div class="editor-item">
-        <span>
-          <label for="favcolor" class="editor-item-label">Background</label>
-        </span>
-          <input  v-model="bgColor" class="color-picker" type="color" id="favcolor" name="favcolor" value="#ff0000" @input="changeBackgroundColor()"><br><br>
-      </div>
-      </div>
-
-    </div>
-    <div class="canvas">
-    <div class="circle" ref="circle">
-      <div>
-        <div  class="stars" ref="star" >
-          <svg  class="star" fill="#C85943" width="40" height="40" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-          </svg>
-          <svg class="star" fill="#C85943" width="50" height="50" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-          </svg>
-          <svg class="star" fill="#C85943" width="40" height="40" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-          </svg>
-        </div>
-        <h1 class="header" draggable="true" contenteditable="true" ondragover="allowDrop(event)">
-          All the text and elements in this popup should be editable and dragable
-        </h1>
-        <div>
-          <input class="email-input"  type="text"  placeholder="E-mail" draggable="true">
-        </div>
-        <div>
-          <button class="signup-button" draggable="true" contenteditable="true">SIGNUP NOW</button>
-          <p class="subHeader" contenteditable="true">No credit card required. No surprises</p>
-        </div>
-      </div>
-    </div>
-    </div>
     
+    <!-- Side Bar -->
+    <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor" />
+    <!-- Canvas -->
+    <div class="canvas">
+      <div class="circle" ref="circle">
+        <div>
+          <div class="stars" ref="star">
+            <svg class="star" :fill="starColor" width="40" height="40" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
+            </svg>
+            <svg class="star" :fill="starColor" width="50" height="50" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
+            </svg>
+            <svg class="star" :fill="starColor" width="40" height="40" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
+            </svg>
+          </div>
+          <h1 class="header" draggable="true" contenteditable="true" ondragover="allowDrop(event)">
+            All the text and elements in this popup should be editable and dragable
+          </h1>
+          <div>
+            <input class="email-input" type="text" placeholder="E-mail" draggable="true">
+          </div>
+          <div>
+            <button class="signup-button" draggable="true" contenteditable="true">SIGNUP NOW</button>
+            <p class="subHeader" contenteditable="true">No credit card required. No surprises</p>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- Save Buton -->
+    <button class="save-button">Save Design
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M19.82 6.195c.24.26.24.683 0 .943L9.974 17.805c-.24.26-.63.26-.87 0L4.18 12.47a.707.707 0 0 1 0-.942c.24-.26.63-.26.87 0l4.488 4.861L18.95 6.195c.24-.26.63-.26.87 0Z"
+          fill="white" />
+      </svg>
+    </button>
+
   </div>
 </template>
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <script>
+import SideBar from './SideBar.vue'
 export default {
-  data(){
+  components: { SideBar },
+  data() {
     return {
-      bgColor:"#DE795E",
-      positions: {
-        clientX: undefined,
-        clientY: undefined,
-        movementX: 0,
-        movementY: 0
-      }
+      bgColor: "#DE795E",
+      starColor: "#C85943",
     }
 
   },
-  methods:{
-    changeBackgroundColor(){
-      this.$refs.circle.style.background=this.bgColor
+  methods: {
+    updateBgColor(color) {
+      this.bgColor = color
+      this.$refs.circle.style.background = this.bgColor
       this.$refs.circle.style.boxShadow = `0 0 0 8px ${this.bgColor}`
     },
-      dragMouseDown: function (event) {
-      event.preventDefault()
-      // get the mouse cursor position at startup:
-      this.positions.clientX = event.clientX
-      this.positions.clientY = event.clientY
-      document.onmousemove = this.elementDrag
-      document.onmouseup = this.closeDragElement
+
+    updateStarColor(color) {
+      this.starColor = color
     },
-    elementDrag: function (event) {
-      event.preventDefault()
-      this.positions.movementX = this.positions.clientX - event.clientX
-      this.positions.movementY = this.positions.clientY - event.clientY
-      this.positions.clientX = event.clientX
-      this.positions.clientY = event.clientY
-      // set the element's new position:
-      this.$refs.star.style.top = (this.$refs.star.offsetTop - this.positions.movementY) + 'px'
-      this.$refs.star.style.left = (this.$refs.star.offsetLeft - this.positions.movementX) + 'px'
+    changeBackgroundColor() {
     },
-    closeDragElement () {
-      document.onmouseup = null
-      document.onmousemove = null
-    }
-   }
+  }
 }
 </script>
 <style scoped>
@@ -110,12 +89,6 @@ export default {
   border-radius: 15px;
   font-weight: 950;
 }
-.save-button{
-  position:absolute;
-  bottom:10px;
-  width:100px;
-  left:20px;
-}
 
 .email-input {
   border: none;
@@ -125,7 +98,6 @@ export default {
   padding: 15px 0px;
   text-indent: 10px;
   border-radius: 15px;
-
 }
 
 .header {
@@ -145,6 +117,7 @@ export default {
 .stars {
   height: 40px;
 }
+
 .circle {
   margin: auto;
   margin-top: 20px;
@@ -169,49 +142,38 @@ export default {
 
 
 
-.wrapper{
+.wrapper {
   display: flex;
 }
-.canvas{
-  width:100vw;
+
+.canvas {
+  width: 100vw;
   height: 100vh;
   background: #2c2c2c;
   display: grid;
   place-content: center;
-  
-}
-.side-bar {
-  height:80vh; 
-  margin-top:auto ;
-  margin-bottom: auto;
-  margin-left: 10px;
-  text-align: left;
-  padding: 0px 10px;
-  border-right: solid  #757575;
-  color:#F6EAE5;
-  width: 15vw;
-  background:#2c2c2c;
-  position:relative;
-  box-shadow:  0 0 2px 2px #494A4E;
-  border-radius: 10px;
 
 }
-.editor-item-label{
-  font-size: 10px;
+
+.save-button:hover {
+
+  background: #000000;
 }
 
-
-.editor-item{
-  display:flex;
+.save-button {
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
   align-items: center;
-  gap:10px;
-}
-.customize{
+  border: none;
+  background: #201c1c;
+  color: white;
+  padding: 10px 10px;
+  bottom: 10px;
   font-size: 15px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
 }
-.color-picker{
-  background:"#1E1E21"
-
-}
-
 </style>

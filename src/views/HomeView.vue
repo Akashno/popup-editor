@@ -7,13 +7,11 @@
 <script>
 // @ is an alias to /src
 import PopUp from '@/components/PopUp.vue'
-import DraggableDiv from '@/components/DraggableDiv.vue'
 
 export default {
   name: 'HomeView',
   components: {
     PopUp,
-    DraggableDiv
   }
 }
 </script>
