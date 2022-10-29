@@ -68,12 +68,11 @@ export default {
 .editor-item{
   display:flex;
   align-items: center;
-  gap:20px;
+  flex-wrap: wrap;
 }
 textarea{
-    width:90;
+    max-width:200px;
     height:100px;
-    resize: none;
     background: #27272F;
     padding:10px;
     color: #F6EAE5;

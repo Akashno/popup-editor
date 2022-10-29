@@ -1,5 +1,5 @@
 <template>
-    <div class="stars">
+    <div>
         <svg class="star" :fill="starColor" width="40" height="40" viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg">
             <path
@@ -30,6 +30,3 @@ export default {
 }
 </script>
 
-<style>
-
-</style>

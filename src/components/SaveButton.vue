@@ -14,6 +14,28 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.save-button:hover {
+  background: #000000;
+}
+.save-button {
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: none;
+  background: #201c1c;
+  color: white;
+  padding: 10px 10px;
+  bottom: 10px;
+  font-size: 15px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+  box-shadow: 20px 20px 50px rgb(53, 49, 49);
+  border: 1px solid #F6EAE5
+}
 
 </style>
