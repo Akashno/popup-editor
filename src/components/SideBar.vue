@@ -53,7 +53,8 @@ export default {
         }
     },
     methods:{
-        setHeader(){ document.getElementById('header').innerHTML = this.header },
+        setHeader(){ 
+            document.getElementById('header').innerHTML = this.header },
         setButtonText(){ document.getElementById('signup-button').innerHTML = this.button },
         setSubHeader(){ document.getElementById('subHeader').innerHTML = this.subHeader }
     }
@@ -73,7 +74,7 @@ textarea{
     width:90;
     height:100px;
     resize: none;
-    background: #2c2c2c;
+    background: #27272F;
     padding:10px;
     color: #F6EAE5;
 
@@ -93,10 +94,9 @@ textarea{
   margin-bottom: auto;
   text-align: left;
   padding:20px 20px ;
-  border: 1px solid #F6EAE5;
   color:#F6EAE5;
   width: 15vw;
-  background:#2c2c2c;
+  background:#27272F;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 

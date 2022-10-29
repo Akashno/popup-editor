@@ -16,10 +16,16 @@ export default {
 }
 </script>
 <style>
+.home{
+  max-width: 1440px;
+  margin-left:auto;
+  margin-right:auto;
+
+}
 body{
   padding:0px;
   margin:0px;
-  background: #2c2c2c;
+  background: #27272F;
 }
 
 

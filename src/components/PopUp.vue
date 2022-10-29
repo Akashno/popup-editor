@@ -1,10 +1,11 @@
 <template>
   <div class="wrapper">
 
+
     <!-- Side Bar -->
-    <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor" @setText="setText" />
+    <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor"  />
     <!-- Canvas -->
-    <div class="canvas">
+    <div class="canvas" @drop="drop($event)" @dragover="allowDrop($event)">
 
       <div class="circle" ref="circle">
         <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent @dragover.prevent>
@@ -19,10 +20,8 @@
               All the text and elements in this popup should be editable and dragable
             </h1>
           </div>
-          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
-            @dragover.prevent>
-            <input @dragstart="drag($event)" id="email-input" class="email-input " type="text" placeholder="E-mail"
-              draggable="true">
+          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent @dragover.prevent>
+            <input @dragstart="drag($event)" id="email-input" class="email-input " type="text" placeholder="E-mail" draggable="true">
           </div>
           <div>
             <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.preventd @dragover.prevent>
@@ -38,14 +37,7 @@
       </div>
     </div>
     <!-- Save Buton -->
-    <button class="save-button" @click="saveDesign()">Save Design
-      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd"
-          d="M19.82 6.195c.24.26.24.683 0 .943L9.974 17.805c-.24.26-.63.26-.87 0L4.18 12.47a.707.707 0 0 1 0-.942c.24-.26.63-.26.87 0l4.488 4.861L18.95 6.195c.24-.26.63-.26.87 0Z"
-          fill="white" />
-      </svg>
-    </button>
-
+    <SaveButton @click="saveDesign()" />
   </div>
 </template>
 
@@ -54,8 +46,9 @@
 <script>
 import SideBar from './SideBar.vue'
 import Stars from './Stars.vue'
+import SaveButton from './SaveButton.vue'
 export default {
-  components: { SideBar,Stars },
+  components: { SideBar,Stars,SaveButton },
   data() {
     return {
       bgColor: "#DE795E",
@@ -64,9 +57,6 @@ export default {
 
   },
   methods: {
-    setText(text, id) {
-      document.getElementById(id).innerHTML = text
-    },
     allowDrop(ev) {
       ev.preventDefault()
     },
@@ -75,12 +65,12 @@ export default {
     },
     drop(ev) {
       ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
+      let data = ev.dataTransfer.getData("text");
       ev.target.appendChild(document.getElementById(data));
     },
     saveDesign() {
-      var markup = document.getElementsByClassName('circle');
-
+      let markup = document.getElementsByClassName('circle');
+      console.log(markup)
     },
     updateBgColor(color) {
       this.bgColor = color
@@ -136,8 +126,8 @@ export default {
   margin-top: 20px;
   flex-grow: 1;
   justify-self: center;
-  min-width: 200px;
-  min-height: 200px;
+  min-width: 400px;
+  min-height: 400px;
   max-width: 400px;
   max-height: 400px;
   aspect-ratio: 1 / 1;
@@ -157,12 +147,16 @@ export default {
 
 .wrapper {
   display: flex;
+
 }
+ 
+
+
 
 .canvas {
   width: 100vw;
   height: 100vh;
-  background: #2c2c2c;
+  background: #1A1B23;
   display: grid;
   place-content: center;
 
@@ -184,6 +178,10 @@ export default {
   bottom: 10px;
   right: 10px;
   border-radius: 10px;
+  box-shadow: 20px 20px 50px rgb(53, 49, 49);
+  border:1px solid #F6EAE5
+
+
 }
 
 .save-button:hover {
