@@ -1,9 +1,8 @@
 <template>
 <div class="side-bar">
-      <p class="customize">Customize</p>
+      <p class="title">Customize</p>
       <hr>
       <div class="editor-items">
-
       <div class="editor-item">
         <span>
           <label for="favcolor" class="editor-item-label">Background</label>
@@ -20,19 +19,19 @@
         <p>
           <label for="favcolor" class="editor-item-label">Header Text</label>
         </p>
-          <textarea  v-model="header" @input="setHeader" class="header-input" type="text" id="favcolor" name="favcolor" value="#ff0000" />
+          <textarea  v-model="header" @input="setHeader" class="header-input"  />
       </div>
 <div class="editor-input-item">
         <p>
           <label for="favcolor" class="editor-item-label">Button Text</label>
         </p>
-          <textarea  v-model="button" @input="setButtonText" class="header-input" type="text" id="favcolor" name="favcolor" value="#ff0000" />
+          <textarea  v-model="button" @input="setButtonText" class="button-input"  />
       </div>
 <div class="editor-input-item">
         <p>
           <label for="favcolor" class="editor-item-label">Sub header text</label>
         </p>
-          <textarea  v-model="subHeader" @input="setSubHeader" class="header-input" type="text" id="favcolor" name="favcolor" value="#ff0000" />
+          <textarea  v-model="subHeader" @input="setSubHeader" class="subheader-input"  />
       </div>
       </div>
 
@@ -42,6 +41,11 @@
 <script>
 
 export default {
+    props:{
+        selectedObject:{
+            type:String
+        }
+    },
     data(){
         return{
             bgColor:"#DE795E",
@@ -80,7 +84,7 @@ textarea{
 .editor-item span{
   width: 80px;
 }
-.customize{
+.title{
   font-size: 15px;
 }
 .color-picker{

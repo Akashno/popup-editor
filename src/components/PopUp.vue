@@ -2,7 +2,6 @@
   <div class="wrapper">
     <!-- Side Bar -->
     <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor" />
-
     <!-- Canvas -->
     <div class="canvas">
       <div class="circle" ref="circle">
@@ -41,7 +40,7 @@
     </div>
     <RightBar @setFont="setFont" :selectedObject="selectedObject" @setFontSize="setFontSize" />
     <!-- Save Buton -->
-    <SaveButton @click="saveDesign()" />
+    <SaveButton @saveDesign="saveDesign()" />
   </div>
 </template>
 
@@ -166,7 +165,8 @@ export default {
       document.onmousemove = null
     },
     saveDesign() {
-      console.log('saved design')
+      console.log('hey')
+      console.log(this.$refs.circle)
     },
     updateBgColor(color) {
       this.bgColor = color
@@ -180,6 +180,63 @@ export default {
 }
 </script>
 <style scoped>
+
+.wrapper {
+  display: flex;
+  position: relative;
+
+}
+
+.canvas {
+  width: 100vw;
+  height: 100vh;
+  background: #1A1B23;
+  display: grid;
+  place-content: center;
+
+}
+
+.circle {
+  margin-top: 20px;
+  flex-grow: 1;
+  justify-self: center;
+  min-width: 400px;
+  min-height: 400px;
+  max-width: 400px;
+  max-height: 400px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: #DE795E;
+  padding: 45px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 8px #DE795E;
+
+}
+
+.stars {
+  width: 100px;
+}
+
+.selectedObject {
+  outline: 2px dashed #201c1c;
+  border: 2px dashed #201c1c;
+  border-radius: 10px;
+}
+
+.email-input {
+  border: none;
+  padding: 10px;
+  background: #FEFEFD;
+  width: 80%;
+  padding: 15px 0px;
+  text-indent: 10px;
+  border-radius: 15px;
+}
+
 .signup-button {
   font-size: 25px;
   border: none;
@@ -203,26 +260,7 @@ export default {
   cursor: move
 }
 
-.selectedObject {
-  outline: 2px dashed #201c1c;
-  border: 2px dashed #201c1c;
-  border-radius: 10px;
-}
 
-.email-input {
-  border: none;
-  padding: 10px;
-  background: #FEFEFD;
-  width: 80%;
-  padding: 15px 0px;
-  text-indent: 10px;
-  border-radius: 15px;
-}
-
-
-.draggable-header {
-  resize: both;
-}
 
 .header {
   max-width: 25rem;
@@ -241,41 +279,6 @@ export default {
 }
 
 
-.circle {
-  margin-top: 20px;
-  flex-grow: 1;
-  justify-self: center;
-  min-width: 400px;
-  min-height: 400px;
-  max-width: 400px;
-  max-height: 400px;
-  aspect-ratio: 1 / 1;
-  border-radius: 50%;
-  background-color: #DE795E;
-  padding: 45px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 4px solid #fff;
-  box-shadow: 0 0 0 8px #DE795E;
-
-}
-
-.wrapper {
-  display: flex;
-  position: relative;
-
-}
-
-.canvas {
-  width: 100vw;
-  height: 100vh;
-  background: #1A1B23;
-  display: grid;
-  place-content: center;
-
-}
 
 /* initial positions of draggable elements */
 #draggable-star,
@@ -318,7 +321,4 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.stars {
-  width: 100px;
-}
 </style>

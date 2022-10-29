@@ -1,20 +1,17 @@
 <template>
-<button class="save-button" >Save Design
+<button class="save-button" @click="$emit('saveDesign')">Save Design
      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-labelledby="saveIconTitle" stroke="#fff" stroke-linecap="square" fill="none" color="#fff"><path d="M17.293 3.293 21 7v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12.586a1 1 0 0 1 .707.293Z"/><path d="M7 13h10v8H7zM8 3h8v5H8z"/></svg> 
     </button>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 
 <style scoped>
-
 .save-button:hover {
-  background: rgb(127,54,248);
-  background: linear-gradient(90deg, rgb(159, 116, 216) 61%, rgb(212, 192, 243) 10%,);
+  background: rgb(118, 33, 236);
   font-weight: bolder;
 }
 .save-button {
@@ -26,7 +23,6 @@ export default {
   border: none;
   color: white;
   background: rgb(127,54,248);
-  background: linear-gradient(90deg, rgba(127,54,248,1) 0%, rgba(143,59,254,1) 61%);
   padding: 10px 10px;
   font-weight: bolder;
   bottom: 10px;

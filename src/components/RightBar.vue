@@ -1,7 +1,6 @@
 <template>
 <div class="right-bar" >
-
-      <p class="customize">Text Style</p>
+      <p class="title">Text Style</p>
       <div class="editor-items">
       <div class="editor-item">
         <p>
@@ -32,7 +31,7 @@ export default {
   },
     data(){
         return{
-            fontSize:12,
+            fontSize:28,
             fontFamily:[
               "'Times New Roman', Times, serif",
               "Arial, Helvetica, sans-serif",
@@ -43,16 +42,11 @@ export default {
         }
     },
     methods:{
-        setHeader(){ 
-            document.getElementById('header').innerHTML = this.header },
+        setHeader(){ document.getElementById('header').innerHTML = this.header },
         setButtonText(){ document.getElementById('signup-button').innerHTML = this.button },
         setSubHeader(){ document.getElementById('subHeader').innerHTML = this.subHeader },
-        setFont(){
-          this.$emit('setFont',this.selectedFont)
-        },
-        setFontSize(){
-          this.$emit('setFontSize',this.fontSize)
-        }
+        setFont(){ this.$emit('setFont',this.selectedFont) },
+        setFontSize(){ this.$emit('setFontSize',this.fontSize) }
     }
 }
 </script>
@@ -81,6 +75,7 @@ select{
 }
 .editor-item{
   margin-bottom:10px;
+
 }
 textarea{
     max-width:200px;
@@ -93,7 +88,7 @@ textarea{
 .editor-item span{
   width: 80px;
 }
-.customize{
+.title{
   font-size: 15px;
 }
 .right-bar {
