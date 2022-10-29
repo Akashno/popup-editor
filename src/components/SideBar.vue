@@ -42,14 +42,13 @@
 <script>
 
 export default {
-
     data(){
         return{
-      bgColor:"#DE795E",
-      starColor:"#C85943",
-      header:"All the text and elements in this popup should be editable and dragable",
-      button:"SIGNUP NOW",
-      subHeader:'No credit card required. No surprises',
+            bgColor:"#DE795E",
+            starColor:"#C85943",
+            header:"All the text and elements in this popup should be editable and dragable",
+            button:"SIGNUP NOW",
+            subHeader:'No credit card required. No surprises',
         }
     },
     methods:{
@@ -61,7 +60,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .editor-item-label{
   font-size: 10px;
 }
@@ -73,7 +72,7 @@ export default {
 textarea{
     max-width:200px;
     height:100px;
-    background: #27272F;
+  background:#1A1B23;
     padding:10px;
     color: #F6EAE5;
 
@@ -89,8 +88,6 @@ textarea{
 
 }
 .side-bar {
-  margin-top:auto ;
-  margin-bottom: auto;
   text-align: left;
   padding:20px 20px ;
   color:#F6EAE5;
