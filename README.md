@@ -1,4 +1,4 @@
-# goofy
+# pop up editor
 
 ## Project setup
 ```
