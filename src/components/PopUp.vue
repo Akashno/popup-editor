@@ -1,44 +1,44 @@
 <template>
   <div class="wrapper">
-    
+
     <!-- Side Bar -->
-    <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor" />
+    <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor" @setText="setText" />
     <!-- Canvas -->
     <div class="canvas">
+
       <div class="circle" ref="circle">
-        <div>
-          <div class="stars" ref="star">
-            <svg class="star" :fill="starColor" width="40" height="40" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-            </svg>
-            <svg class="star" :fill="starColor" width="50" height="50" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-            </svg>
-            <svg class="star" :fill="starColor" width="40" height="40" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.5 17.925 6.629 21l1.121-6.512L3 9.875l6.564-.95L12.5 3l2.936 5.925 6.564.95-4.75 4.613L18.371 21z" />
-            </svg>
+        <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent @dragover.prevent>
+          <div class="stars  " ref="star">
+            <div draggable="true" id="drag1" @dragstart="drag($event)">
+             <Stars :starColor="starColor"/> 
+            </div>
           </div>
-          <h1 class="header" draggable="true" contenteditable="true" ondragover="allowDrop(event)">
-            All the text and elements in this popup should be editable and dragable
-          </h1>
-          <div>
-            <input class="email-input" type="text" placeholder="E-mail" draggable="true">
+          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
+            @dragover.prevent>
+            <h1 class="header " id="header" @dragstart="drag($event)" draggable="true" ref="header">
+              All the text and elements in this popup should be editable and dragable
+            </h1>
+          </div>
+          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
+            @dragover.prevent>
+            <input @dragstart="drag($event)" id="email-input" class="email-input " type="text" placeholder="E-mail"
+              draggable="true">
           </div>
           <div>
-            <button class="signup-button" draggable="true" contenteditable="true">SIGNUP NOW</button>
-            <p class="subHeader" contenteditable="true">No credit card required. No surprises</p>
+            <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.preventd @dragover.prevent>
+              <button class="signup-button " @dragstart="drag($event)" id="signup-button" draggable="true">SIGNUP NOW</button>
+            </div>
+            <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
+              @dragover.prevent>
+              <p class="subHeader " @dragstart="drag($event)" id="subHeader" draggable="true">No credit card required.
+                No surprises</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-     <!-- Save Buton -->
-    <button class="save-button">Save Design
+    <!-- Save Buton -->
+    <button class="save-button" @click="saveDesign()">Save Design
       <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M19.82 6.195c.24.26.24.683 0 .943L9.974 17.805c-.24.26-.63.26-.87 0L4.18 12.47a.707.707 0 0 1 0-.942c.24-.26.63-.26.87 0l4.488 4.861L18.95 6.195c.24-.26.63-.26.87 0Z"
@@ -53,8 +53,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <script>
 import SideBar from './SideBar.vue'
+import Stars from './Stars.vue'
 export default {
-  components: { SideBar },
+  components: { SideBar,Stars },
   data() {
     return {
       bgColor: "#DE795E",
@@ -63,23 +64,37 @@ export default {
 
   },
   methods: {
+    setText(text, id) {
+      document.getElementById(id).innerHTML = text
+    },
+    allowDrop(ev) {
+      ev.preventDefault()
+    },
+    drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+    },
+    drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+    },
+    saveDesign() {
+      var markup = document.getElementsByClassName('circle');
+
+    },
     updateBgColor(color) {
       this.bgColor = color
       this.$refs.circle.style.background = this.bgColor
       this.$refs.circle.style.boxShadow = `0 0 0 8px ${this.bgColor}`
     },
-
     updateStarColor(color) {
       this.starColor = color
-    },
-    changeBackgroundColor() {
     },
   }
 }
 </script>
 <style scoped>
 .signup-button {
-  margin-top: 20px;
   font-size: 25px;
   border: none;
   background: #413E41;
@@ -102,7 +117,6 @@ export default {
 
 .header {
   max-width: 25rem;
-  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,11 +129,10 @@ export default {
 }
 
 .stars {
-  height: 40px;
+  height: 50px;
 }
 
 .circle {
-  margin: auto;
   margin-top: 20px;
   flex-grow: 1;
   justify-self: center;
@@ -155,10 +168,6 @@ export default {
 
 }
 
-.save-button:hover {
-
-  background: #000000;
-}
 
 .save-button {
   cursor: pointer;
@@ -175,5 +184,12 @@ export default {
   bottom: 10px;
   right: 10px;
   border-radius: 10px;
+}
+
+.save-button:hover {
+  background: #000000;
+}
+.drop-zone {
+  padding:10px 0px
 }
 </style>
