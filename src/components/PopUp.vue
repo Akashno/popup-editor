@@ -3,37 +3,31 @@
 
 
     <!-- Side Bar -->
+
     <SideBar @updateBgColor="updateBgColor" @updateStarColor="updateStarColor"  />
     <!-- Canvas -->
-    <div class="canvas" @drop="drop($event)" @dragover="allowDrop($event)">
-
+    <div class="canvas" @dragover="drag_over($event)" @drop="drop($event)">
       <div class="circle" ref="circle">
-        <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent @dragover.prevent>
-          <div class="stars  " ref="star">
-            <div draggable="true" id="drag1" @dragstart="drag($event)">
-             <Stars :starColor="starColor"/> 
-            </div>
+        <div @mousedown="dragStars" class="stars"   ref="draggableContainer" id="draggable-container">
+             <Stars :starColor="starColor" id="drag1" /> 
           </div>
-          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
-            @dragover.prevent>
-            <h1 class="header " id="header" @dragstart="drag($event)" draggable="true" ref="header">
+          <div  @mousedown="dragHeader" ref="draggableHeaderContainer" id="draggable-header-container">
+            <h1 class="header " id="header"  draggable="true" ref="header">
               All the text and elements in this popup should be editable and dragable
             </h1>
           </div>
-          <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent @dragover.prevent>
-            <input @dragstart="drag($event)" id="email-input" class="email-input " type="text" placeholder="E-mail" draggable="true">
+          <div  @mousedown="dragInput" ref="draggableInputContainer" id="draggable-input-container">
+            <input  id="email-input" class="email-input " type="text" placeholder="E-mail" draggable="true">
           </div>
           <div>
-            <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.preventd @dragover.prevent>
-              <button class="signup-button " @dragstart="drag($event)" id="signup-button" draggable="true">SIGNUP NOW</button>
+            <div class="" @mousedown="dragButton" ref="draggableButtonContainer" id="draggable-button-container">
+              <button class="signup-button "  id="signup-button" >SIGNUP NOW</button>
             </div>
-            <div class="drop-zone" @drop="drop($event)" @dragover="allowDrop($event)" @dragenter.prevent
-              @dragover.prevent>
-              <p class="subHeader " @dragstart="drag($event)" id="subHeader" draggable="true">No credit card required.
+            <div class="drop-zone" ref="draggableSubHeaderContainer" id="draggable-subheader-container" @mousedown="dragSubHeader">
+              <p class="subHeader "  id="subHeader" draggable="true">No credit card required.
                 No surprises</p>
             </div>
           </div>
-        </div>
       </div>
     </div>
     <!-- Save Buton -->
@@ -53,20 +47,128 @@ export default {
     return {
       bgColor: "#DE795E",
       starColor: "#C85943",
+      star:null,
+      header:null,
+      input:null,
+      button:null,
+      subHeader:null,
     }
-
+  },
+  mounted(){
+    class Position{
+      constructor(){
+          this.clientX =  undefined,
+          this.clientY =  undefined,
+          this.movementX =  0,
+          this.movementY = 0
+      }
+      
+      updateClientX(clientX){
+        this.clientX = clientX
+      }
+      updateClientY(clientY){
+        this.clientY = clientY
+      }
+      updateMovementX(movementX){
+        this.movementX = movementX
+      }
+      updateMovementY(movementY){
+        this.movementY = movementY
+      }
+    }
+      this.star = new Position()
+        this.header =new Position()
+        this.input = new Position()
+        this.button = new Position()
+        this.subHeader = new Position()
   },
   methods: {
-    allowDrop(ev) {
-      ev.preventDefault()
+     dragStars: function (event) {
+      event.preventDefault()
+      this.star.updateClientX(event.clientX)
+      this.star.updateClientY(event.clientY)
+      document.onmousemove = this.elementStarDrag
+      document.onmouseup = this.closeDragElement
     },
-    drag(ev) {
-      ev.dataTransfer.setData("text", ev.target.id);
+    elementStarDrag: function (event) {
+      event.preventDefault()
+      this.star.updateMovementX(this.star.clientX - event.clientX)
+      this.star.updateMovementY(this.star.clientY - event.clientY)
+      this.star.updateClientX(event.clientX)
+      this.star.updateClientY(event.clientY)
+      this.$refs.draggableContainer.style.top = (this.$refs.draggableContainer.offsetTop - this.star.movementY) + 'px'
+      this.$refs.draggableContainer.style.left = (this.$refs.draggableContainer.offsetLeft - this.star.movementX) + 'px'
     },
-    drop(ev) {
-      ev.preventDefault();
-      let data = ev.dataTransfer.getData("text");
-      ev.target.appendChild(document.getElementById(data));
+
+     dragHeader: function (event) {
+      event.preventDefault()
+      this.header.updateClientX(event.clientX)
+      this.header.updateClientY(event.clientY)
+      document.onmousemove = this.elementHeaderDrag
+      document.onmouseup = this.closeDragElement
+    },
+    elementHeaderDrag: function (event) {
+      event.preventDefault()
+      this.header.updateMovementX(this.header.clientX - event.clientX)
+      this.header.updateMovementY(this.header.clientY - event.clientY)
+      this.header.updateClientX(event.clientX)
+      this.header.updateClientY(event.clientY)
+      this.$refs.draggableHeaderContainer.style.top = (this.$refs.draggableHeaderContainer.offsetTop - this.header.movementY) + 'px'
+      this.$refs.draggableHeaderContainer.style.left = (this.$refs.draggableHeaderContainer.offsetLeft - this.header.movementX) + 'px'
+    },
+
+     dragInput: function (event) {
+      event.preventDefault()
+      this.input.updateClientX(event.clientX)
+      this.input.updateClientY(event.clientY)
+      document.onmousemove = this.elementInputDrag
+      document.onmouseup = this.closeDragElement
+    },
+    elementInputDrag: function (event) {
+      event.preventDefault()
+      this.input.updateMovementX(this.input.clientX - event.clientX)
+      this.input.updateMovementY(this.input.clientY - event.clientY)
+      this.input.updateClientX(event.clientX)
+      this.input.updateClientY(event.clientY)
+      this.$refs.draggableInputContainer.style.top = (this.$refs.draggableInputContainer.offsetTop - this.input.movementY) + 'px'
+      this.$refs.draggableInputContainer.style.left = (this.$refs.draggableInputContainer.offsetLeft - this.input.movementX) + 'px'
+    },
+     dragButton: function (event) {
+      event.preventDefault()
+      this.button.updateClientX(event.clientX)
+      this.button.updateClientY(event.clientY)
+      document.onmousemove = this.elementButtonDrag
+      document.onmouseup = this.closeDragElement
+    },
+    elementButtonDrag: function (event) {
+      event.preventDefault()
+      this.button.updateMovementX(this.button.clientX - event.clientX)
+      this.button.updateMovementY(this.button.clientY - event.clientY)
+      this.button.updateClientX(event.clientX)
+      this.button.updateClientY(event.clientY)
+      this.$refs.draggableButtonContainer.style.top = (this.$refs.draggableButtonContainer.offsetTop - this.button.movementY) + 'px'
+      this.$refs.draggableButtonContainer.style.left = (this.$refs.draggableButtonContainer.offsetLeft - this.button.movementX) + 'px'
+    },
+
+     dragSubHeader: function (event) {
+      event.preventDefault()
+      this.subHeader.updateClientX(event.clientX)
+      this.subHeader.updateClientY(event.clientY)
+      document.onmousemove = this.elementSubHeaderDrag
+      document.onmouseup = this.closeDragElement
+    },
+    elementSubHeaderDrag: function (event) {
+      event.preventDefault()
+      this.subHeader.updateMovementX(this.subHeader.clientX - event.clientX)
+      this.subHeader.updateMovementY(this.subHeader.clientY - event.clientY)
+      this.subHeader.updateClientX(event.clientX)
+      this.subHeader.updateClientY(event.clientY)
+      this.$refs.draggableSubHeaderContainer.style.top = (this.$refs.draggableSubHeaderContainer.offsetTop - this.subHeader.movementY) + 'px'
+      this.$refs.draggableSubHeaderContainer.style.left = (this.$refs.draggableSubHeaderContainer.offsetLeft - this.subHeader.movementX) + 'px'
+    },
+    closeDragElement () {
+      document.onmouseup = null
+      document.onmousemove = null
     },
     saveDesign() {
       let markup = document.getElementsByClassName('circle');
@@ -118,9 +220,6 @@ export default {
   color: #F6EAE5;
 }
 
-.stars {
-  height: 50px;
-}
 
 .circle {
   margin-top: 20px;
@@ -189,5 +288,39 @@ export default {
 }
 .drop-zone {
   padding:10px 0px
+}
+#draggable-container, #draggable-header-container,#draggable-input-container,#draggable-button-container,#draggable-subheader-container {
+  position: absolute;
+  z-index: 9;
+  width:90%
+
+}
+
+#draggable-container{
+  top:10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#draggable-header-container{
+  top:32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#draggable-input-container{
+  top:55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#draggable-button-container{
+  top:70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#draggable-subheader-container{
+  bottom:5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
