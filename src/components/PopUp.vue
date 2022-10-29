@@ -11,29 +11,35 @@
           <Stars :starColor="starColor" />
         </div>
         <!-- Header -->
-        <div  @mousedown="dragHeader" ref="draggableHeader" id="draggable-header" @click="setCurrentItem('header')">
-          <h1 :class="selectedObject === 'header'&& 'selectedObject' " class="header " id="header" draggable="true" ref="header">
+        <div @mousedown="dragHeader" ref="draggableHeader" id="draggable-header" @click="setCurrentItem('header')">
+          <h1 :class="selectedObject === 'header' && 'selectedObject'" class="header " id="header" draggable="true"
+            ref="header">
             All the text and elements in this popup should be editable and dragable
           </h1>
         </div>
         <!-- Input field -->
-        <div @mousedown="dragInput" ref="draggableInput" id="draggable-input" @click="setCurrentItem(null)">
-          <input :class="selectedObject === 'email-input'&& 'selectedObject' " id="email-input" class="email-input " type="text" placeholder="E-mail" draggable="true">
+        <div @mousedown="dragInput" ref="draggableInput" id="draggable-input" @click="setCurrentItem('email-input')">
+          <input ref="email-input" :class="selectedObject === 'email-input' && 'selectedObject'" id="email-input" class="email-input "
+            type="text" placeholder="E-mail" draggable="true">
         </div>
         <div>
-        <!-- Signup button -->
-        <div class="" @mousedown="dragButton" ref="draggableButton" id="draggable-button" @click="setCurrentItem('signup-button')">
-          <button :class="selectedObject === 'signup-button'&& 'selectedObject' " ref="signup-button" class="signup-button " id="signup-button" @click="setCurrentItem('signup-button')">SIGNUP NOW</button>
-        </div>
-        <!-- subHeader -->
-        <div class="drop-zone" ref="draggableSubHeader" id="draggable-subheader" @mousedown="dragSubHeader" @click="setCurrentItem('subHeader')">
-          <span :class="selectedObject === 'subHeader'&& 'selectedObject' " class="subHeader " ref="subHeader" id="subHeader" draggable="true">No credit card required.  No surprises</span>
+          <!-- Signup button -->
+          <div class="" @mousedown="dragButton" ref="draggableButton" id="draggable-button"
+            @click="setCurrentItem('signup-button')">
+            <button :class="selectedObject === 'signup-button' && 'selectedObject'" ref="signup-button"
+              class="signup-button " id="signup-button" @click="setCurrentItem('signup-button')">SIGNUP NOW</button>
+          </div>
+          <!-- subHeader -->
+          <div class="drop-zone" ref="draggableSubHeader" id="draggable-subheader" @mousedown="dragSubHeader"
+            @click="setCurrentItem('subHeader')">
+            <span :class="selectedObject === 'subHeader' && 'selectedObject'" class="subHeader " ref="subHeader"
+              id="subHeader" draggable="true">No credit card required. No surprises</span>
           </div>
         </div>
 
       </div>
     </div>
-    <RightBar  @setFont="setFont" :selectedObject="selectedObject"/>
+    <RightBar @setFont="setFont" :selectedObject="selectedObject" @setFontSize="setFontSize" />
     <!-- Save Buton -->
     <SaveButton @click="saveDesign()" />
   </div>
@@ -47,7 +53,7 @@ import RightBar from './RightBar.vue'
 import Stars from './Stars.vue'
 import SaveButton from './SaveButton.vue'
 export default {
-  components: {RightBar,SideBar, Stars, SaveButton },
+  components: { RightBar, SideBar, Stars, SaveButton },
   data() {
     return {
       bgColor: "#DE795E",
@@ -57,16 +63,16 @@ export default {
       input: null,
       button: null,
       subHeader: null,
-      selectedObject:''
+      selectedObject: ''
     }
   },
   mounted() {
     class Position {
-      constructor(cx, cy, mx, my) {
-        this.clientX = cx
-        this.clientY = cy
-        this.movementX = mx
-        this.movementY = my
+      constructor() {
+        this.clientX = undefined
+        this.clientY = undefined
+        this.movementX = 0
+        this.movementY = 0
       }
       updateClientPos(clientX, clientY) {
         this.clientX = clientX
@@ -77,19 +83,17 @@ export default {
         this.movementY = movementY
       }
     }
-    this.star = new Position(undefined, undefined, 0, 0)
-    this.header = new Position(undefined, undefined, 0, 0)
-    this.input = new Position(undefined, undefined, 0, 0)
-    this.button = new Position(undefined, undefined, 0, 0)
-    this.subHeader = new Position(undefined, undefined, 0, 0)
+    this.star = new Position()
+    this.header = new Position()
+    this.input = new Position()
+    this.button = new Position()
+    this.subHeader = new Position()
   },
   methods: {
-   setCurrentItem(item){
-      this.selectedObject = item
-    },
-    setFont(font){
-      this.$refs[this.selectedObject].style.fontFamily =font 
-    },
+    setFontSize(size) { this.$refs[this.selectedObject].style.fontSize = size + 'px' },
+    setTextAlign(align) { this.$refs[this.selectedObject].style.textAlign = align },
+    setCurrentItem(item) { this.selectedObject = item },
+    setFont(font) { this.$refs[this.selectedObject].style.fontFamily = font },
     setPos(item, movementY, movementX) {
       this.$refs[item].style.top = (this.$refs[item].offsetTop - movementY) + 'px'
       this.$refs[item].style.left = (this.$refs[item].offsetLeft - movementX) + 'px'
@@ -191,19 +195,18 @@ export default {
 .email-input:hover,
 .header:hover,
 .subHeader:hover,
-.stars-container:hover {
+.stars:hover {
 
   outline: 2px dashed #201c1c;
   border: 2px dashed #201c1c;
   border-radius: 10px;
-  cursor:move
-
+  cursor: move
 }
-.selectedObject{
+
+.selectedObject {
   outline: 2px dashed #201c1c;
   border: 2px dashed #201c1c;
   border-radius: 10px;
-  cursor:move
 }
 
 .email-input {
@@ -234,7 +237,7 @@ export default {
 
 .subHeader {
   color: #F6EAE5;
-  padding:5px;
+  padding: 5px;
 }
 
 
@@ -261,7 +264,7 @@ export default {
 
 .wrapper {
   display: flex;
-  position:relative;
+  position: relative;
 
 }
 
@@ -284,31 +287,38 @@ export default {
   z-index: 9;
   width: 90%
 }
+
 #draggable-star {
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 #draggable-header {
   top: 32%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 #draggable-input {
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 #draggable-button {
   top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 #draggable-subheader {
   bottom: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-
+.stars {
+  width: 100px;
+}
 </style>
