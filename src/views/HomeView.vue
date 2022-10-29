@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <PopUp/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import PopUp from '@/components/PopUp.vue'
+import DraggableDiv from '@/components/DraggableDiv.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    PopUp,
+    DraggableDiv
   }
 }
 </script>
+<style>
+body{
+  padding:0px;
+  margin:0px;
+  background: #2c2c2c;
+}
+
+
+</style>
